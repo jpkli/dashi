@@ -17,12 +17,14 @@ function Button(arg) {
         icon = options.icon || false,
         title = options.title || false,
         type = options.type,
+        background = options.background || null,
         types = options.types || [];
 
     if(type) types.push(type);
     button.className = 'ui button ' + types.join(' ');
     button.onclick = callback;
     button.style.textAlign = 'center';
+    // button.style.verticalAlign = 'top';
 
     if(icon) {
         var i = document.createElement('i');

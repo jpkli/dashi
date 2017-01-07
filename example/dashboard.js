@@ -48,7 +48,7 @@ function DashBoard() {
             'view': 'cluster-view',
             'id': 'clusterContainer'
         },
-        header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
     })
 
     panels.cluster.append('<div class="cluster-svg" id="cluster-svg"></div>');
@@ -57,7 +57,7 @@ function DashBoard() {
         container: layout.cell(1, 1), //row=1, col=1
         id: "panel-detail",
         title: "Detail",
-        header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
     })
     //
     panels.table = new Panel({
@@ -65,7 +65,7 @@ function DashBoard() {
         title: "Table",
         id: "panel-table",
         padding: 30,
-        header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.08, style: {backgroundColor: '#F4F4F4'}}
     })
 
     panels.overview = new Panel({
@@ -73,14 +73,14 @@ function DashBoard() {
         id: "panel-overview",
         title: "Overview",
         padding: 30,
-        header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
     })
 
     panels.info = new Panel({
         container: subLayout.cell(2, 0),
         id: "panel-info",
         title: "Information",
-        header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
     })
 
 
@@ -95,6 +95,11 @@ function DashBoard() {
     });
 
     panels.overview.header.append(buttonToggleTable);
+
+    panels.info.header.append(new Button({
+        label: 'Button in the header',
+        types: ['mini', 'teal']
+    }));
 
     Object.keys(panels).forEach(function(p){
 
@@ -121,6 +126,7 @@ function DashBoard() {
         label: 'Start',
         types: ['massive', 'primary']
     }));
+
 
     var buttonSizes = ['huge', 'big', 'large', 'mediumn', 'small', 'tiny', 'mini'];
     buttonSizes.forEach(function(size){
