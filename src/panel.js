@@ -1,0 +1,169 @@
+if(typeof loadUIComponents == 'function')
+    loadUIComponents(['segment', 'header']);
+
+if(typeof define == 'function') {
+    define(['./ui'], function(ui){
+        ui(['panel']);
+        return Panel;
+    });
+}
+
+function Panel(arg) {
+    "use strict";
+    var panel,
+        option = arg || {},
+        container = option.container || document.body,
+        header = option.header || null,
+        title = option.title || "",
+        margin = option.margin || 0,
+        padding = option.padding || 0,
+        types = option.types || [],
+        classNames = 'panel ui segment',
+        headerHeight;
+
+    if(container) {
+        container = (typeof(container) == "string") ? document.getElementById(container) : container;
+    }
+
+    if(option.id) {
+        panel = document.getElementById(option.id);
+        if(panel === null) {
+            panel = document.createElement("div");
+            panel.setAttribute('id', option.id);
+            container.appendChild(panel);
+        }
+    } else {
+        panel = document.createElement("div");
+        container.appendChild(panel);
+    }
+
+    var fullScreen = false,
+        width = option.width || container.clientWidth,
+        height = option.height || container.clientHeight;
+
+    width -= margin*2;
+    height -= margin*2;
+
+    panel.className = "ui";
+    panel.style.margin = margin + 'px';
+
+    panel.style.width = width + "px";
+    panel.style.height = height + "px";
+
+    if(header) {
+        headerHeight = option.header.height || 0.08 * height;
+        if(headerHeight < 1) headerHeight *= height;
+        panel.header = document.createElement('div');
+        panel.header.className = "ui top attached block header primary";
+        panel.header.style.backgroundColor = "#FFFFFF";
+        panel.header.style.height = headerHeight + "px";
+        panel.header.style.width = width + "px";
+        panel.header.style.fontSize = headerHeight * 0.32 + 'px';
+
+        if(option.header.hasOwnProperty('style')){
+            Object.keys(option.header.style).forEach(function(s){
+                panel.header.style[s] = option.header.style[s];
+            });
+        }
+        panel.header.style.padding = (headerHeight - parseInt(panel.header.style.fontSize)) / 2 - 2+ 'px';
+        panel.header.style.paddingLeft = '10px';
+
+        var panelTitle = document.createElement('span');
+        panelTitle.innerHTML = title;
+        panel.header.appendChild(panelTitle);
+        panel.appendChild(panel.header);
+        Object.defineProperty(panel, "title", {
+            get: function() { return title; },
+            set: function(title) {panelTitle.innerHTML = title;}
+        });
+        classNames += ' bottom attached';
+
+        if(Array.isArray(option.header.controls)){
+            option.header.controls.forEach(function(ctrl){
+                panel.header.appendChild(ctrl);
+            })
+        }
+
+        var controls = document.createElement('div');
+        controls.style.float = 'right';
+        panel.header.appendChild(controls)
+
+        panel.header.append = function(elem) {
+            controls.appendChild(elem);
+        }
+
+    } else {
+        headerHeight = 0;
+    }
+
+    panel.body = document.createElement("div");
+    panel.body.className = classNames + ' panel-body ' + types.join(' ');
+    panel.body.style.width = width + "px";
+    panel.body.style.height = height - headerHeight + "px";
+    panel.body.style.padding = padding + 'px';
+    panel.appendChild(panel.body);
+
+    panel.innerWidth = width - padding * 2;
+    panel.innerHeight = height - headerHeight - padding * 2;
+
+    panel.showLoading = function() {
+        panel.body.className += ' loading';
+    }
+
+    panel.hideLoading = function() {
+        panel.body.className = panel.body.className.replace(/\bloading\b/,'');
+    }
+
+    panel.append = function(child) {
+        panel.body.appendChild(child);
+        return panel;
+    }
+
+    panel.clear = function(){
+        panel.body.innerHTML = "";
+    }
+
+    panel.update = function(domArray) {
+        panel.clear();
+        panel.body.appendChild(domArray);
+    }
+
+    panel.toggleFullScreen = function() {
+        if(!fullScreen) {
+            panel.style.position = 'fixed';
+            panel.style.top = 0;
+            panel.style.left = 0;
+            panel.style.zIndex = 9999;
+            panel.resize(document.body.clientWidth, document.body.clientHeight);
+        } else {
+            panel.style.position = 'relative';
+            panel.style.zIndex = 0;
+            panel.resize(container.clientWidth-margin*2, container.clientHeight-margin*2);
+        }
+
+        fullScreen = !fullScreen;
+
+    }
+
+    panel.resize = function(w, h) {
+        if(typeof w == 'undefined' || typeof h == 'undefined') {
+            width = container.clientWidth;
+            height = container.clientHeight;
+        } else {
+            width = w;
+            height = h;
+        }
+
+        panel.style.width = width + "px";
+        panel.style.height = height + "px";
+        panel.body.style.width = width + "px";
+        panel.body.style.height = height - headerHeight + "px";
+        if(header) {
+            panel.header.style.height = headerHeight + "px";
+            panel.header.style.width = width + "px";
+        }
+    }
+
+
+    return panel;
+};

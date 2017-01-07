@@ -1,0 +1,21 @@
+{
+  "name": "vastui",
+  "version": "0.1.0",
+  "description": "Visual Analytics User Interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "visual",
+    "analytics",
+    "visualization",
+    "user",
+    "interface"
+  ],
+  "author": "Kelvin Li",
+  "license": "ISC",
+  "dependencies": {
+    "semantic-ui": "^2.2.7"
+  }
+}
