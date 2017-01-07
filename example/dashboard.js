@@ -104,8 +104,10 @@ function DashBoard() {
         }))
     })
 
-    panels.cluster.showLoading();
-    panels.cluster.hideLoading();
+    panels.cluster.showLoading(); //this will show an indicator for loading in the panel
+
+    panels.detail.showLoading();
+    panels.detail.hideLoading(); //this will hide the indicator for loading
 
 
     panels.table.append(new Button({
