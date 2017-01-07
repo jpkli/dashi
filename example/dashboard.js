@@ -65,7 +65,7 @@ function DashBoard() {
         title: "Table",
         id: "panel-table",
         padding: 30,
-        header: {height: 0.08, style: {backgroundColor: '#F4F4F4'}}
+        header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
     })
 
     panels.overview = new Panel({
@@ -98,7 +98,8 @@ function DashBoard() {
 
     panels.info.header.append(new Button({
         label: 'Button in the header',
-        types: ['mini', 'teal']
+        types: ['teal'],
+        size: '0.6em'
     }));
 
     Object.keys(panels).forEach(function(p){

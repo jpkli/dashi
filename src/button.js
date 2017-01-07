@@ -17,6 +17,7 @@ function Button(arg) {
         icon = options.icon || false,
         title = options.title || false,
         type = options.type,
+        fontSize = options.fontSize || options.size || null,
         background = options.background || null,
         types = options.types || [];
 
@@ -24,7 +25,7 @@ function Button(arg) {
     button.className = 'ui button ' + types.join(' ');
     button.onclick = callback;
     button.style.textAlign = 'center';
-    // button.style.verticalAlign = 'top';
+    button.style.verticalAlign = 'top';
 
     if(icon) {
         var i = document.createElement('i');
@@ -34,6 +35,7 @@ function Button(arg) {
         button.appendChild(i);
     }
     if(text !== null) button.innerHTML += text;
+    if(fontSize !== null) button.style.fontSize = fontSize;
     if(title) button.title = title;
     if(container) container.appendChild(button);
 
