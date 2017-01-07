@@ -29,7 +29,7 @@ function DashBoard() {
     });
 
     var subLayout = Layout({
-        container: layout.cell('topRow'), //select cell in layout by id 
+        container: layout.cell('topRow'), //select cell in layout by id
         cols: [
             {width: 0.3},
             {width: 0.35},
@@ -43,8 +43,15 @@ function DashBoard() {
         container: layout.cell(1, 0), //row=1, col=0
         id: "panel-cluster",
         title: "Cluster",
+        angularJS: {  //insert angularJS stuff to the panel
+            'ng-controller': 'clusterController',
+            'view': 'cluster-view',
+            'id': 'clusterContainer'
+        },
         header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
     })
+
+    panels.cluster.append('<div class="cluster-svg" id="cluster-svg"></div>');
 
     panels.detail = new Panel({
         container: layout.cell(1, 1), //row=1, col=1

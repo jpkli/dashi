@@ -19,6 +19,7 @@ function Panel(arg) {
         padding = option.padding || 0,
         types = option.types || [],
         classNames = 'panel ui segment',
+        angularJS = option.AngularJS || option.angularJS || false,
         headerHeight;
 
     if(container) {
@@ -106,6 +107,12 @@ function Panel(arg) {
     panel.innerWidth = width - padding * 2;
     panel.innerHeight = height - headerHeight - padding * 2;
 
+    if(angularJS && angularJS.hasOwnProperty('ng-controller')) {
+        panel.setAttribute('ng-controller', angularJS['ng-controller']);
+        panel.body.setAttribute(angularJS['view'], '');
+        panel.body.setAttribute('id', angularJS['id'])
+    }
+
     panel.showLoading = function() {
         panel.body.className += ' loading';
     }
@@ -115,7 +122,10 @@ function Panel(arg) {
     }
 
     panel.append = function(child) {
-        panel.body.appendChild(child);
+        if(typeof child == 'string')
+            panel.body.innerHTML += child;
+        else
+            panel.body.appendChild(child);
         return panel;
     }
 
