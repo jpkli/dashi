@@ -29,7 +29,7 @@ function DashBoard() {
     });
 
     var subLayout = Layout({
-        container: layout.cell('topRow'),
+        container: layout.cell('topRow'), //select cell in layout by id 
         cols: [
             {width: 0.3},
             {width: 0.35},
@@ -40,14 +40,14 @@ function DashBoard() {
     var panels = {};
 
     panels.cluster = new Panel({
-        container: layout.cell(1, 0), //row=0, col=0
+        container: layout.cell(1, 0), //row=1, col=0
         id: "panel-cluster",
         title: "Cluster",
         header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
     })
 
     panels.detail = new Panel({
-        container: layout.cell(1, 1), //row=0, col=1
+        container: layout.cell(1, 1), //row=1, col=1
         id: "panel-detail",
         title: "Detail",
         header: {height: 0.09, style: {backgroundColor: '#F4F4F4'}}
