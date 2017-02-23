@@ -135,4 +135,13 @@ function DashBoard() {
         p.appendChild(new Button({label: size, type: size}))
         panels.overview.append(p);
     })
+
+
+    var fileUploadButton = new Button({
+        label: 'Upload Files',
+        types: ['primary'],
+        fileInput: {id: 'testFileUpload', onchange: function(files) { console.log(files);}},
+    });
+
+    panels.info.append(fileUploadButton);
 };

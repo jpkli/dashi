@@ -4,7 +4,7 @@ if(typeof loadUIComponents == 'function')
 if(typeof define == 'function') {
     define(['./ui'], function(ui){
         ui(['checkbox']);
-        return Button;
+        return Checkbox;
     });
 }
 
@@ -23,13 +23,14 @@ function Checkbox(arg) {
         label = document.createElement('label');
 
     checkbox.className = 'ui checkbox ' + types.join(' ');
+    checkbox.style.margin = '10px';
     label.innerHTML = text;
     input.setAttribute('type', 'checkbox');
     input.setAttribute('name', name);
     input.onchange = callback;
 
-    checkbox.append(label);
-    checkbox.append(input);
+    checkbox.appendChild(label);
+    checkbox.appendChild(input);
 
     if(container) container.appendChild(checkbox);
 
@@ -38,10 +39,9 @@ function Checkbox(arg) {
         jquery('.ui.checkbox').checkbox();
     }
 
-    Object.defineProperty(wrapper, 'onchange', {
+    Object.defineProperty(checkbox, 'onchange', {
         set: function(f) { callback = f; }
     })
-
 
     return checkbox;
 }

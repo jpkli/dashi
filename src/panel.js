@@ -50,6 +50,7 @@ function Panel(arg) {
 
     panel.style.width = width + "px";
     panel.style.height = height + "px";
+    // panel.style.boxSizing = 'border-box';
 
     if (header) {
         headerHeight = option.header.height || 0.08 * height;
@@ -100,7 +101,11 @@ function Panel(arg) {
 
 
         panel.header.append = function(elem) {
-            controls.appendChild(elem);
+            if (typeof elem == 'string')
+                controls.innerHTML += elem;
+            else
+                controls.appendChild(elem);
+            return panel;
         }
 
     } else {
@@ -124,11 +129,19 @@ function Panel(arg) {
     }
 
     panel.showLoading = function() {
-        panel.body.className += ' loading';
+        if((' ' + panel.body.className + ' ').indexOf(' loading ') === -1)
+            panel.body.className += ' loading';
     }
 
     panel.hideLoading = function() {
         panel.body.className = panel.body.className.replace(/\bloading\b/, '');
+    }
+
+    panel.toggleLoading = function() {
+        if((' ' + panel.body.className + ' ').indexOf(' loading ') === -1)
+            panel.body.className += ' loading';
+        else
+            panel.hideLoading();
     }
 
     panel.append = function(child) {
@@ -148,11 +161,12 @@ function Panel(arg) {
         panel.body.appendChild(domArray);
     }
 
+
     panel.toggleFullScreen = function() {
         if (!fullScreen) {
             panel.style.position = 'fixed';
-            panel.style.top = 0;
-            panel.style.left = 0;
+            panel.style.top = '1px';
+            panel.style.left = '1px';
             panel.style.zIndex = 9999;
             panel.resize(document.body.clientWidth, document.body.clientHeight);
         } else {

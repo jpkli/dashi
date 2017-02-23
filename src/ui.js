@@ -23,7 +23,8 @@ function vastui() {
         icon     : ['icon'],
         menu     : ['menu', 'transition'],
         dropdown : ['dropdown', 'transition'],
-        radios   : ['checkbox']
+        radios   : ['checkbox'],
+        checkbox : ['checkbox']
     };
 
     return function load(component) {
