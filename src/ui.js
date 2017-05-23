@@ -1,4 +1,13 @@
 if(!window.installedUI) window.installedUI = [];
+if(typeof(requirejs) !== "undefined" && typeof(requirejs.config) == "function") {
+    // requirejs.config({
+    //   paths: {
+    //     // 'jquery' : '../node_modules/jquery/dist/jquery.min',
+    //     'semantic': '../semantic/dist/semantic.min'
+    //   }
+    // });
+    // console.log('requirejs configure semantic');
+}
 
 function loadUIComponents(components) {
     var uiComponents = (Array.isArray(components)) ? components : [components]
@@ -24,7 +33,11 @@ function vastui() {
         menu     : ['menu', 'transition'],
         dropdown : ['dropdown', 'transition'],
         radios   : ['checkbox'],
-        checkbox : ['checkbox']
+        checkbox : ['checkbox'],
+        progress : ['progress'],
+        table    : ['table'],
+        list     : ['list'],
+        modal    : ['modal', 'transition']
     };
 
     return function load(component) {

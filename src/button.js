@@ -20,10 +20,12 @@ function Button(arg) {
         fontSize = options.fontSize || options.size || null,
         background = options.background || null,
         fileInput = options.fileInput || false,
+        value = options.value || null,
         types = options.types || [];
 
     if(type) types.push(type);
-    button.className = 'ui button ' + types.join(' ');
+    types.push('ui button');
+    button.className = types.join(' ');
     button.onclick = callback;
     button.style.textAlign = 'center';
     button.style.verticalAlign = 'top';
@@ -34,6 +36,10 @@ function Button(arg) {
         i.style.marginRight = "10px";
         button.className += ' icon';
         button.appendChild(i);
+    }
+
+    if(value !== null) {
+        button.setAttribute('value', value);
     }
 
     if(fileInput) {
@@ -48,7 +54,8 @@ function Button(arg) {
         input.style.display = 'none';
         if(typeof fileInput.onchange === 'function') {
             input.addEventListener('change', function(evt) {
-                fileInput.onchange(evt.target.files);
+                // fileInput.onchange(evt.target.files);
+                fileInput.onchange(evt);
                 return false;
             }, false);
         }
@@ -66,6 +73,23 @@ function Button(arg) {
     if(fontSize !== null) button.style.fontSize = fontSize;
     if(title) button.title = title;
     if(container) container.appendChild(button);
+
+    button.showLoading = function() {
+        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
+            button.className += ' loading';
+    }
+
+    button.hideLoading = function() {
+        button.className = button.className.replace(/\bloading\b/, '');
+    }
+
+    button.toggleLoading = function() {
+        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
+            button.className += ' loading';
+        else
+            button.hideLoading();
+    }
+
 
     return button;
 }

@@ -1,5 +1,12 @@
 if(typeof define == 'function') {
-    define(['../src/layout', '../src/panel', '../src/icon', '../src/button'], function(Layout, Panel, Icon, Button){
+    define([
+        '../src/layout',
+        '../src/panel',
+        '../src/icon',
+        '../src/button',
+        '../src/progress'
+    ],
+     function(Layout, Panel, Icon, Button, Progress){
         return DashBoard;
     });
 } else {
@@ -81,7 +88,7 @@ function DashBoard() {
         id: "panel-info",
         title: "Information",
         header: {height: 0.1, style: {backgroundColor: '#F4F4F4'}}
-    })
+    });
 
 
     var toggleTabble = true;
@@ -93,6 +100,8 @@ function DashBoard() {
             toggleTabble = !toggleTabble;
         }
     });
+
+
 
     panels.overview.header.append(buttonToggleTable);
 
@@ -132,10 +141,9 @@ function DashBoard() {
     var buttonSizes = ['huge', 'big', 'large', 'mediumn', 'small', 'tiny', 'mini'];
     buttonSizes.forEach(function(size){
         var p = document.createElement('p');
-        p.appendChild(new Button({label: size, type: size}))
+        p.appendChild(new Button({label: size, type: size}));
         panels.overview.append(p);
     })
-
 
     var fileUploadButton = new Button({
         label: 'Upload Files',
@@ -144,4 +152,11 @@ function DashBoard() {
     });
 
     panels.info.append(fileUploadButton);
+
+    var progressBar = new Progress({
+        percentage: 80,
+        types: ['indicating']
+    });
+    panels.detail.append(progressBar);
+
 };

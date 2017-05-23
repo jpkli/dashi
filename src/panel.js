@@ -16,6 +16,7 @@ function Panel(arg) {
         header = option.header || null,
         title = option.title || "",
         margin = option.margin || 0,
+        style = option.style || {},
         padding = option.padding || 0,
         types = option.types || [],
         classNames = 'panel ui segment',
@@ -117,8 +118,19 @@ function Panel(arg) {
     panel.body.style.width = width + "px";
     panel.body.style.height = height - headerHeight + "px";
     panel.body.style.padding = padding + 'px';
+    if (option.hasOwnProperty('style')) {
+
+        Object.keys(option.style).forEach(function(s) {
+            panel.body.style[s] = option.style[s];
+        });
+    }
+
     panel.appendChild(panel.body);
 
+
+
+    if(option.id)
+        panel.body.setAttribute('id', option.id+"-body");
     panel.innerWidth = width - padding * 2;
     panel.innerHeight = height - headerHeight - padding * 2;
 

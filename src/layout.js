@@ -53,7 +53,6 @@ function Layout(arg) {
 
         var layout = document.createElement('div');
 
-
         if(layoutId)
             layout.setAttribute('id', layoutId);
         container.style.overflow = 'hidden';
@@ -159,9 +158,9 @@ function Layout(arg) {
                         height -= rowHeight;
                     }
 
-                    // rowHeight -= padding*2;
                     row.style.width = colWidth - padding*2 + 'px';
                     row.style.height = rowHeight - padding*2 + 'px';
+
                     // row.style.border = '1px solid #222';
                     row.style.marginTop = ri * padding*2 - 2 + 'px';
                     col.appendChild(row);
@@ -173,10 +172,6 @@ function Layout(arg) {
                         elements['cell-row'+ri+'-col'+ci] = row;
                     }
 
-                    // if(!cs.hasOwnProperty('rows')){
-                    //     cells[ci][ri] = col;
-                    //     elements[rs.id] = col;
-                    // }
                 })
                 divCols.push(col);
                 layout.appendChild(col);
@@ -186,6 +181,10 @@ function Layout(arg) {
     }
 
     var layout = createLayout(width, height);
+
+    Object.keys(elements).forEach(function(k){
+        elements[k].append = elements[k].appendChild;
+    })
 
     layout.cell = function(id, cid) {
         if(typeof id === 'number')
@@ -248,9 +247,7 @@ function Layout(arg) {
     }
 
     layout.get = layout.grid = layout.cell;
-
     container.appendChild(layout);
-
     // container.onresize = function() {
     //     var newLayout = createLayout(container.clientWidth, container.clientHeight);
     //     layout.replaceWith(newLayout);
