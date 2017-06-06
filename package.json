@@ -12,7 +12,7 @@
     "user interface"
   ],
   "author": "Kelvin Li",
-  "license": "ISC",
+  "license": "BSD-3-Clause",
   "dependencies": {
     "semantic-ui": "^2.2.7"
   }
