@@ -1,17 +1,15 @@
 {
-  "name": "vastui",
+  "name": "davi",
   "version": "0.1.0",
-  "description": "Visual Analytics User Interface",
+  "description": "Data Analytics and Visualization Interface",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "visual",
-    "analytics",
+    "data analytics",
     "visualization",
-    "user",
-    "interface"
+    "user interface"
   ],
   "author": "Kelvin Li",
   "license": "ISC",
