@@ -29,11 +29,11 @@ function List(arg) {
             if(!items[itemId]._selected) {
                 items[itemId]._selected = true;
                 items[itemId].className += ' selected';
-                items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
+                // items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
             } else {
                 items[itemId]._selected = false;
                 items[itemId].className = items[itemId].className.replace('selected', '');
-                items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
+                // items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
             }
             options.onselect.call(items[itemId], itemId)
         }
@@ -84,9 +84,9 @@ function List(arg) {
     }
 
     list.getSelectedItemIds = function() {
-        return items.filter(function(d){
-            return d._selected === true;
-        });
+        return items
+            .map((d, i) => d._selected === true ? i : -1)
+            .filter(id => id >= 0);
     }
 
     list.get = function(i) {
