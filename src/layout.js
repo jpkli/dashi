@@ -4,6 +4,7 @@ function Layout(arg) {
     'use strict';
     var options = arg || {},
         layoutId = options.id || false,
+        className = options.class || "",
         margin = options.margin || 0,
         padding = options.padding || 5,
         rows = options.rows || [],
@@ -20,6 +21,9 @@ function Layout(arg) {
         container.style.padding = 0;
         container.style.margin = 0;
     }
+
+
+
 
     var setting = {
         rowHeights: [],
@@ -55,6 +59,10 @@ function Layout(arg) {
 
         if(layoutId)
             layout.setAttribute('id', layoutId);
+
+        if(typeof className == 'string')
+            layout.className = className;
+
         container.style.overflow = 'hidden';
         layout.style.height = height + "px";
         layout.style.width = width + "px";
