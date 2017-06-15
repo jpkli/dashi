@@ -22,24 +22,37 @@ function List(arg) {
     list.className = 'ui list ' + types.join(' ');
     var items = [];
 
+    let setSelected = (itemId, selected) => {
+        if (selected == items[itemId]._selected) {
+            return;
+        }
+        if (selected) {
+            items[itemId]._selected = true;
+            items[itemId].className += ' selected';
+            if(items[itemId].hasOwnProperty('icon'))
+                items[itemId].icon.className +=
+                        ' ' + selectedColor + ' ' + selectedIcon;
+            if(types.indexOf('multi-select') === -1) {
+                items.forEach(function(item){ item._selected = false;})
+            }
+            // items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
+            return;
+        }
+        items[itemId]._selected = false;
+        items[itemId].className =
+                items[itemId].className.replace('selected', '');
+        if(items[itemId].hasOwnProperty('icon'))
+            items[itemId].icon.className =
+                    items[itemId].icon.className.replace(
+                        selectedColor + ' ' + selectedIcon, '');
+        // items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
+    }
+
     var onSelect = function() {};
 
     if(typeof options.onselect == 'function') {
         onSelect = function(itemId) {
-            if(!items[itemId]._selected) {
-                items[itemId]._selected = true;
-                items[itemId].className += ' selected';
-                if(items[itemId].hasOwnProperty('icon'))
-                    items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
-                if(types.indexOf('multi-select') === -1) {
-                    items.forEach(function(item){ item._selected = false;})
-                }
-            } else {
-                items[itemId]._selected = false;
-                items[itemId].className = items[itemId].className.replace('selected', '');
-                if(items[itemId].hasOwnProperty('icon'))
-                    items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
-            }
+            setSelected(itemId, !items[itemId]._selected);
             options.onselect.call(items[itemId], itemId)
         }
     }
@@ -87,10 +100,23 @@ function List(arg) {
         return list;
     }
 
-    list.getSelectedItemIds = function() {
-        return items.filter(function(d){
-            return d._selected === true;
+    list.setSelectedItemIds = ids => {
+        list.clearSelected();
+        ids.forEach(id => {
+            setSelected(id, true);
+        })
+    }
+
+    list.clearSelected = () => {
+        items.forEach((item, id) => {
+            setSelected(id, false);
         });
+    }
+
+    list.getSelectedItemIds = function() {
+        return items
+            .map((d, i) => d._selected === true ? i : -1)
+            .filter(id => id >= 0);
     }
 
     list.get = function(i) {
