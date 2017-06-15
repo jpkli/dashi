@@ -29,11 +29,16 @@ function List(arg) {
             if(!items[itemId]._selected) {
                 items[itemId]._selected = true;
                 items[itemId].className += ' selected';
-                items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
+                if(items[itemId].hasOwnProperty('icon'))
+                    items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
+                if(types.indexOf('multi-select') === -1) {
+                    items.forEach(function(item){ item._selected = false;})
+                }
             } else {
                 items[itemId]._selected = false;
                 items[itemId].className = items[itemId].className.replace('selected', '');
-                items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
+                if(items[itemId].hasOwnProperty('icon'))
+                    items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
             }
             options.onselect.call(items[itemId], itemId)
         }
@@ -74,7 +79,6 @@ function List(arg) {
         item.icon = icon;
         items.push(item);
         list.appendChild(item);
-
 
         if(types.indexOf('selection') !== -1){
             item.onclick = onSelect.bind(this, itemId);
