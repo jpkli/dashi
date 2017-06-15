@@ -62,10 +62,12 @@ function List(arg) {
             content = document.createElement('div');
         item.className = 'item';
         content.className = 'content';
+
         if(li.hasOwnProperty('icon')) {
             var icon = document.createElement('i');
             icon.className = li.icon + ' icon';
             item.appendChild(icon);
+            item.icon = icon;
         }
 
         if(li.hasOwnProperty('img')) {
@@ -89,7 +91,6 @@ function List(arg) {
         item.appendChild(content);
         var itemId = items.length;
         item._selected = false;
-        item.icon = icon;
         items.push(item);
         list.appendChild(item);
 
