@@ -27,14 +27,14 @@ function List(arg) {
             return;
         }
         if (selected) {
+            // if(types.indexOf('multi-select') === -1) {
+            //     items.forEach(function(item){ item._selected = false;})
+            // }
             items[itemId]._selected = true;
             items[itemId].className += ' selected';
             if(items[itemId].hasOwnProperty('icon'))
                 items[itemId].icon.className +=
                         ' ' + selectedColor + ' ' + selectedIcon;
-            if(types.indexOf('multi-select') === -1) {
-                items.forEach(function(item){ item._selected = false;})
-            }
             // items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
             return;
         }
