@@ -48,7 +48,7 @@ function Dropdown(arg) {
             ic.className = item.icon + ' icon';
             itemDiv.appendChild(ic);
             itemDiv.appendChild(text);
-            itemDiv.onclick = callback.call(this, arg);
+            itemDiv.onclick = callback.bind(this, arg);
             itemDiv.className = 'item';
             menu.appendChild(itemDiv);
         })
