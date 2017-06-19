@@ -27,15 +27,11 @@ function List(arg) {
             return;
         }
         if (selected) {
-            // if(types.indexOf('multi-select') === -1) {
-            //     items.forEach(function(item){ item._selected = false;})
-            // }
             items[itemId]._selected = true;
             items[itemId].className += ' selected';
             if(items[itemId].hasOwnProperty('icon'))
                 items[itemId].icon.className +=
                         ' ' + selectedColor + ' ' + selectedIcon;
-            // items[itemId].icon.className += ' ' + selectedColor + ' ' + selectedIcon;
             return;
         }
         items[itemId]._selected = false;
@@ -45,16 +41,19 @@ function List(arg) {
             items[itemId].icon.className =
                     items[itemId].icon.className.replace(
                         selectedColor + ' ' + selectedIcon, '');
-        // items[itemId].icon.className = items[itemId].icon.className.replace(selectedColor + ' ' + selectedIcon, '');
     }
 
-    var onSelect = function() {};
-
-    if(typeof options.onselect == 'function') {
-        onSelect = function(itemId) {
+    list.onselect = options.onselect || function() {};
+    var onSelect = function(itemId) {
+        if (types.indexOf('single') !== -1) {
+            // single selection only
+            list.clearSelected();
+            setSelected(itemId, true);
+        } else {
+            // multiple selection
             setSelected(itemId, !items[itemId]._selected);
-            options.onselect.call(items[itemId], itemId)
         }
+        list.onselect.call(items[itemId], itemId);
     }
 
     list.append = function(li) {
