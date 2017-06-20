@@ -90,8 +90,11 @@ function Layout(arg) {
 
             if(rowHeight<1) rowHeight *= height;
 
-            row.style.margin = padding + 'px';
-            rowHeight -= padding * 2;
+            layout.style.paddingTop = padding + 'px';
+            row.style.marginBottom = padding + 'px';
+            row.style.marginLeft = padding + 'px';
+            row.style.marginRight = padding + 'px';
+            rowHeight -= padding * 2 - 1;
             row.style.height = rowHeight + "px";
             divRows.push(row);
             setting.rowHeights.push(rowHeight);
@@ -111,8 +114,8 @@ function Layout(arg) {
                     }
                     // colWidth -= padding * 2;
 
-                    var col = createColumn(colWidth, rowHeight + padding - 1);
-                    col.style.marginTop = 1 + 'px';
+                    var col = createColumn(colWidth, rowHeight + padding);
+                    col.style.marginTop = 0 + 'px';
                     col.style.marginBottom = 0 + 'px';
                     if (0 === ci) {
                         col.style.marginLeft = 0 + 'px';
