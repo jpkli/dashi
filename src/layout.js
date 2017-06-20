@@ -6,7 +6,7 @@ function Layout(arg) {
         layoutId = options.id || false,
         className = options.class || "",
         margin = options.margin || 0,
-        padding = options.padding || 5,
+        padding = options.padding === undefined ? 5 : options.padding,
         rows = options.rows || [],
         cols = options.cols || [],
         divRows = [],
@@ -90,10 +90,11 @@ function Layout(arg) {
 
             if(rowHeight<1) rowHeight *= height;
 
+            row.style.margin = padding + 'px';
+            rowHeight -= padding * 2;
             row.style.height = rowHeight + "px";
             divRows.push(row);
             setting.rowHeights.push(rowHeight);
-            // rowHeight -= padding * 2;
             if(rs.hasOwnProperty('cols')) {
                 var defaultColWidth = width / rs.cols.length;
                 rs.cols.forEach(function(cs, ci){
@@ -103,14 +104,22 @@ function Layout(arg) {
                             colWidth = cs.width;
                             rowWidth -= colWidth + padding*2;
                         } else {
-                            colWidth = cs.width * rowWidth;
+                            colWidth = Math.floor(cs.width * (rowWidth + padding));
                         }
                     } else {
                         colWidth = defaultColWidth;
                     }
                     // colWidth -= padding * 2;
 
-                    var col = createColumn(colWidth, rowHeight);
+                    var col = createColumn(colWidth, rowHeight + padding - 1);
+                    col.style.marginTop = 1 + 'px';
+                    col.style.marginBottom = 0 + 'px';
+                    if (0 === ci) {
+                        col.style.marginLeft = 0 + 'px';
+                        // col.style.overflow = '';
+                    } else if (rs.cols.length - 1 === ci) {
+                        col.style.marginRight = 0 + 'px';
+                    }
                     row.appendChild(col);
                     cells[ri][ci] = col;
                     if(cs.hasOwnProperty('id')) {
@@ -170,7 +179,7 @@ function Layout(arg) {
                     row.style.height = rowHeight - padding*2 + 'px';
 
                     // row.style.border = '1px solid #222';
-                    row.style.marginTop = ri * padding*2 - 2 + 'px';
+                    row.style.marginTop = ri * padding*2 - 1 + 'px';
                     col.appendChild(row);
                     cells[ci][ri] = row;
                     if(rs.hasOwnProperty('id')) {
