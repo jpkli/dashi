@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['button', 'icon']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['button']);
-        return Button;
-    });
-}
-
-function Button(arg) {
+export default function Button(arg) {
     var button = document.createElement('div'),
         options = arg || {},
         container = options.container || document.body,

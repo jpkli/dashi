@@ -1,15 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['progress']);
-
-if(typeof define == 'function') {
-    define(['./ui', '../semantic/dist/components/progress'], function(ui) {
-        ui(['progress']);
-        return Progress;
-    });
-}
-
-
-function Progress(arg) {
+export default function Progress(arg) {
     var div = document.createElement('div'),
         bar = document.createElement('div'),
         progress = document.createElement('div'),
@@ -43,7 +32,7 @@ function Progress(arg) {
             setPercentage(percent);
             return div;
         }
-    })
+    });
 
     function setPercentage() {
         if(typeof jquery == 'function') {
@@ -55,15 +44,15 @@ function Progress(arg) {
 
     div.hide = function() {
         div.style.display = 'none';
-    }
+    };
 
     div.show = function() {
         div.style.display = 'block';
-    }
+    };
 
     div.label = function(text) {
         label.innerHTML = text;
-    }
+    };
 
-    return div
+    return div;
 }

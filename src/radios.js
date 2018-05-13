@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['form', 'checkbox']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['radios']);
-        return Radios;
-    });
-}
-
-function Radios(arg) {
+export default function Radios(arg) {
     var radios = document.createElement('div'),
         options = arg || {},
         container = options.container || document.body,
@@ -70,7 +60,7 @@ function Radios(arg) {
 
     Object.defineProperty(wrapper, 'onchange', {
         set: function(f) { callback = f; return radios; }
-    })
+    });
 
     return wrapper;
 }

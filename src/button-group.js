@@ -1,13 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['button', 'icon']);
-
-if(typeof define == 'function') {
-    define(function(ui){
-        return ButtonGroup;
-    });
-}
-
-function ButtonGroup(arg) {
+export default function ButtonGroup(arg) {
     var buttonGroup = document.createElement('div'),
         options = arg || {},
         buttons = options.buttons || [],

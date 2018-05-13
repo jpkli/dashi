@@ -1,21 +1,11 @@
-if (typeof loadUIComponents == 'function')
-    loadUIComponents(['segment', 'header']);
-
-if (typeof define == 'function') {
-    define(['./ui'], function(ui) {
-        ui(['panel']);
-        return Panel;
-    });
-}
-
-function Panel(arg) {
-    "use strict";
+export default function Panel(arg) {
+    'use strict';
     var panel,
         option = arg || {},
         container = option.container || document.body,
         header = option.header || null,
         title = option.title || "",
-        margin = option.margin || 0,
+        margin = option.margin || 5,
         style = option.style || {},
         padding = option.padding || 0,
         types = option.types || [],
@@ -107,7 +97,7 @@ function Panel(arg) {
             else
                 controls.appendChild(elem);
             return panel;
-        }
+        };
 
     } else {
         headerHeight = 0;
@@ -127,8 +117,6 @@ function Panel(arg) {
 
     panel.appendChild(panel.body);
 
-
-
     if(option.id)
         panel.body.setAttribute('id', option.id+"-body");
     panel.innerWidth = width - padding * 2;
@@ -143,18 +131,18 @@ function Panel(arg) {
     panel.showLoading = function() {
         if((' ' + panel.body.className + ' ').indexOf(' loading ') === -1)
             panel.body.className += ' loading';
-    }
+    };
 
     panel.hideLoading = function() {
         panel.body.className = panel.body.className.replace(/\bloading\b/, '');
-    }
+    };
 
     panel.toggleLoading = function() {
         if((' ' + panel.body.className + ' ').indexOf(' loading ') === -1)
             panel.body.className += ' loading';
         else
             panel.hideLoading();
-    }
+    };
 
     panel.append = function(child) {
         if (typeof child == 'string')
@@ -162,16 +150,16 @@ function Panel(arg) {
         else
             panel.body.appendChild(child);
         return panel;
-    }
+    };
 
     panel.clear = function() {
         panel.body.innerHTML = "";
-    }
+    };
 
     panel.update = function(domArray) {
         panel.clear();
         panel.body.appendChild(domArray);
-    }
+    };
 
 
     panel.toggleFullScreen = function() {
@@ -212,4 +200,4 @@ function Panel(arg) {
 
 
     return panel;
-};
+}

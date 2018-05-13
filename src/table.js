@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['table']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['table']);
-        return Table;
-    });
-}
-
-function Table(arg) {
+export default function Table(arg) {
     var table = document.createElement('table'),
         options = arg || {},
         container = options.container || document.body,
@@ -43,7 +33,10 @@ function Table(arg) {
         var tr = document.createElement('tr');
         row.forEach(function(col){
             var td = document.createElement('td');
-            td.innerHTML = col;
+            if(col instanceof HTMLElement)
+                td.appendChild(col);
+            else
+                td.innerHTML = col;
             tr.appendChild(td);
         });
         tableBody.appendChild(tr);
@@ -62,6 +55,8 @@ function Table(arg) {
             table.style[s] = options.style[s];
         });
     }
+
+    table.tbody = tableBody;
 
     return table;
 }

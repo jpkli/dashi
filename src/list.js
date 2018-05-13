@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['list']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['list']);
-        return List;
-    });
-}
-
-function List(arg) {
+export default function List(arg) {
     var list= document.createElement('div'),
         options = arg || {},
         container = options.container || document.body,
@@ -41,7 +31,7 @@ function List(arg) {
             items[itemId].icon.className =
                     items[itemId].icon.className.replace(
                         selectedColor + ' ' + selectedIcon, '');
-    }
+    };
 
     list.onselect = options.onselect || function() {};
     var onSelect = function(itemId) {
@@ -54,7 +44,7 @@ function List(arg) {
             setSelected(itemId, !items[itemId]._selected);
         }
         list.onselect.call(items[itemId], itemId);
-    }
+    };
 
     list.append = function(li) {
         var item = document.createElement('div'),
@@ -98,44 +88,44 @@ function List(arg) {
         }
 
         return list;
-    }
+    };
 
     list.setSelectedItemIds = ids => {
         list.clearSelected();
         ids.forEach(id => {
             setSelected(id, true);
-        })
-    }
+        });
+    };
 
     list.clearSelected = () => {
         items.forEach((item, id) => {
             setSelected(id, false);
         });
-    }
+    };
 
     list.getSelectedItemIds = function() {
         return items
             .map((d, i) => d._selected === true ? i : -1)
             .filter(id => id >= 0);
-    }
+    };
 
     list.get = function(i) {
         return items[i];
-    }
+    };
 
     list.select = function(i) {
         onSelect(i);
-    }
+    };
 
     list.clear = function() {
         items = [];
         list.innerHTML = '';
-    }
+    };
 
     list.remove = function(i) {
         list.removeChild(items[i]);
         return list;
-    }
+    };
 
     return list;
 }

@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['checkbox']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['checkbox']);
-        return Checkbox;
-    });
-}
-
-function Checkbox(arg) {
+export default function Checkbox(arg) {
     var checkbox = document.createElement('div'),
         options = arg || {},
         container = options.container || document.body,

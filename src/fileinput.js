@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['button', 'icon']);
-
-if(typeof define == 'function') {
-    define(['./ui', './button'], function(ui, button){
-        ui(['button']);
-        return FileInput.bind(null, button);
-    });
-}
-
-function FileInput(arg) {
+export default function FileInput(arg) {
     var button;
     if(typeof arguments[0] === 'function') {
         button = arguments[0](arg);

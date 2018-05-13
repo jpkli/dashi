@@ -1,12 +1,11 @@
-if(typeof(define) == 'function') define(function(){return Layout;});
-
-function Layout(arg) {
+export default function Layout(arg) {
     'use strict';
     var options = arg || {},
         layoutId = options.id || false,
         className = options.class || "",
         margin = options.margin || 0,
-        padding = options.padding === undefined ? 5 : options.padding,
+        spacing = options.spacing || 5,
+        padding = options.padding || 0,
         rows = options.rows || [],
         cols = options.cols || [],
         divRows = [],
@@ -20,10 +19,8 @@ function Layout(arg) {
         container.style.height = window.innerHeight + 'px';
         container.style.padding = 0;
         container.style.margin = 0;
+        container.style.overflow = 'hidden';
     }
-
-
-
 
     var setting = {
         rowHeights: [],
@@ -31,27 +28,77 @@ function Layout(arg) {
     };
 
     var width = options.width ||  container.clientWidth || window.innerWidth,
-        height = options.height || container.clientHeight || window.innerHeight;
+        height = options.height || container.clientHeight|| window.innerHeight;
 
-    // height *= 0.96; //leave some space for footer
     width -= margin*2;
     height -= margin*2;
+
+    var divs = {},
+        cells = [];
+
+
+    function createRow(w, h) {
+        var row = document.createElement('div');
+        row.style.width = w + 'px';
+        row.style.height = h + 'px';
+        row.className = 'davi-row';
+        row.style.overflow = 'hidden';
+        return row;
+    }
 
     function createColumn(w, h) {
         var col = document.createElement('div');
         col.style.display = 'inline-block';
-        // col.style.border = '1px solid #AAA';
-        // col.style.padding = padding + 'px';
-        col.style.margin = padding + 'px';
+        col.className = 'davi-col';
         col.style.verticalAlign = "top";
-        // col.style.margin = "4px";
-        col.style.width = w - padding*2+ 'px';
-        col.style.height = h - padding*2+ 'px';
+        col.style.width = w + 'px';
+        col.style.height = h + 'px';
+        col.style.overflow = 'hidden';
         return col;
     }
 
-    var cells = [],
-        elements = {};
+    function createColumns(spec, container, w, h) {
+      var columns = [],
+          widthTotal = w,
+          widthRemaining = widthTotal;
+
+      spec.forEach(function(cs, i){
+          var colWidth = (cs.width > 1) ? cs.width : cs.width * widthTotal;
+          columns[i] = createColumn(colWidth, h);
+          widthRemaining -= colWidth;
+          if(cs.id !== undefined) {
+              columns[i].setAttribute('id', cs.id)
+              divs[cs.id] = columns[i];
+          }
+          container.appendChild(columns[i]);
+          if(cs.rows) columns[i] = createRows(cs.rows, columns[i], w, h);
+
+      });
+
+      return columns;
+    }
+
+    function createRows(spec, container, w, h) {
+        var rows = [],
+            rowWidth = w,
+            heightTotal = h,
+            heightRemaining = heightTotal;
+
+        spec.forEach(function(rs, i){
+            var rowHeight = (rs.height > 1) ? rs.height : rs.height * heightTotal;
+            rows[i] = createRow(rowWidth, rowHeight);
+            heightRemaining -= rowHeight;
+            if(rs.id !== undefined) {
+                rows[i].setAttribute('id', rs.id)
+                divs[rs.id] = rows[i];
+            }
+            container.appendChild(rows[i]);
+            if(rs.cols) rows[i] = createColumns(rs.cols, rows[i], rowWidth, rowHeight);
+
+        });
+
+        return rows;
+    }
 
     function createLayout(width, height) {
 
@@ -63,147 +110,26 @@ function Layout(arg) {
         if(typeof className == 'string')
             layout.className = className;
 
-        container.style.overflow = 'hidden';
+        // container.style.overflow = 'hidden';
         layout.style.height = height + "px";
         layout.style.width = width + "px";
+
         layout.style.margin = margin + 'px';
+        layout.className = 'davi-layout';
         // layout.style.overflow = 'hidden';
         // layout.style.padding = '0';
 
-        cells = [];
-        elements = {};
 
-        var defaultRowHeight = height / rows.length;
-
-
-        rows.forEach(function(rs, ri){
-            var row = document.createElement('div'),
-                defaultRowHeight = height / (rows.length - ri),
-                rowWidth = width,
-                rowHeight = rs.height || defaultRowHeight;
-            height -= rowHeight;
-            cells[ri] = [];
-            if(rs.hasOwnProperty('id')) {
-                row.setAttribute('id', rs.id);
-                elements[rs.id] = row;
-            }
-
-            if(rowHeight<1) rowHeight *= height;
-
-            layout.style.paddingTop = padding + 'px';
-            row.style.marginBottom = padding + 'px';
-            row.style.marginLeft = padding + 'px';
-            row.style.marginRight = padding + 'px';
-            rowHeight -= padding * 2 - 1;
-            row.style.height = rowHeight + "px";
-            divRows.push(row);
-            setting.rowHeights.push(rowHeight);
-            if(rs.hasOwnProperty('cols')) {
-                var defaultColWidth = width / rs.cols.length;
-                rs.cols.forEach(function(cs, ci){
-                    var colWidth;
-                    if(cs.hasOwnProperty('width')){
-                        if(cs.width>1) {
-                            colWidth = cs.width;
-                            rowWidth -= colWidth + padding*2;
-                        } else {
-                            colWidth = Math.floor(cs.width * (rowWidth + padding));
-                        }
-                    } else {
-                        colWidth = defaultColWidth;
-                    }
-                    // colWidth -= padding * 2;
-
-                    var col = createColumn(colWidth, rowHeight + padding);
-                    col.style.marginTop = 0 + 'px';
-                    col.style.marginBottom = 0 + 'px';
-                    if (0 === ci) {
-                        col.style.marginLeft = 0 + 'px';
-                        // col.style.overflow = '';
-                    } else if (rs.cols.length - 1 === ci) {
-                        col.style.marginRight = 0 + 'px';
-                    }
-                    row.appendChild(col);
-                    cells[ri][ci] = col;
-                    if(cs.hasOwnProperty('id')) {
-                        col.setAttribute('id', cs.id);
-                        elements[cs.id] = col;
-                    } else {
-                        elements['cell-row'+ri+'-col'+ci] = col;
-                    }
-                })
-            } else {
-                cells[ri] = row;
-            }
-            layout.appendChild(row);
-        })
-
-        if(cols.length) {
-            var defaultColWidth = width / cols.length,
-                rowWidth = width;
-            cols.forEach(function(cs, ci){
-                var colWidth;
-                cells[ci] = [];
-                if(cs.hasOwnProperty('width')){
-                    if(cs.width>1) {
-                        colWidth = cs.width;
-                        rowWidth -= colWidth;
-                    } else {
-                        colWidth = cs.width * rowWidth;
-                    }
-                } else {
-                    colWidth = defaultColWidth;
-                }
-
-                var col = createColumn(colWidth, height),
-                    colsInThisRow;
-
-                if(cs.id) col.setAttribute('id', cs.id);
-                setting.colWidths.push(colWidth);
-
-                if(!cs.hasOwnProperty('rows'))
-                    colsInThisRow = [cs];
-                else
-                    colsInThisRow = cs.rows;
-
-                var defaultRowHeight = height / colsInThisRow.length;
-                colsInThisRow.forEach(function(rs, ri){
-                    var rowHeight = rs.height*height || defaultRowHeight,
-                        row = document.createElement('div');
-                    if(colsInThisRow.length == 1)
-                        rowHeight -= padding;
-
-                    if(rs.height > 1) {
-                        rowHeight = rs.height;
-                        height -= rowHeight;
-                    }
-
-                    row.style.width = colWidth - padding*2 + 'px';
-                    row.style.height = rowHeight - padding*2 + 'px';
-
-                    // row.style.border = '1px solid #222';
-                    row.style.marginTop = ri * padding*2 - 1 + 'px';
-                    col.appendChild(row);
-                    cells[ci][ri] = row;
-                    if(rs.hasOwnProperty('id')) {
-                        row.setAttribute('id', rs.id);
-                        elements[rs.id] = row;
-                    } else {
-                        elements['cell-row'+ri+'-col'+ci] = row;
-                    }
-
-                })
-                divCols.push(col);
-                layout.appendChild(col);
-            })
-        }
         return layout;
     }
 
     var layout = createLayout(width, height);
 
-    Object.keys(elements).forEach(function(k){
-        elements[k].append = elements[k].appendChild;
+    if(rows.length) cells = createRows(rows, layout, width, height);
+    if(cols.length) cells = createColumns(cols, layout, width, height);
+
+    Object.keys(divs).forEach(function(k){
+        divs[k].append = divs[k].appendChild;
     })
 
     layout.cell = function(id, cid) {
@@ -213,60 +139,11 @@ function Layout(arg) {
             else
                 return cells[id];
         else
-            return elements[id];
+            return divs[id];
     }
 
-    layout.hide = function(cid) {
-        var cid = cid || 0;
 
-        if(divCols.length) {
-            divCols.forEach(function(col, ci){
-                var newWidth = col.clientWidth + divCols[cid].clientWidth * col.clientWidth / (width-divCols[cid].clientWidth) + padding*2;
-                if(ci != cid) {
-                    col.style.width =  newWidth + 'px';
-                    cells[ci].forEach(function(c){
-                        c.style.width = newWidth + 'px';
-                        if(typeof c.firstElementChild.resize == 'function') c.firstElementChild.resize();
-                    })
-                }
-            })
-            divCols[cid].style.display = 'none';
-        }
-
-        if(divRows.length) {
-            divRows.forEach(function(col, ci){
-                var newHeight = col.clientHeight + divRows[cid].clientHeight / (divRows.length-1) + padding*2/(divRows.length-1);
-                if(ci != cid) col.style.height =  newHeight + 'px';
-                cells[ci].forEach(function(c){
-                    c.style.height = newHeight + 'px';
-                    if(typeof c.firstElementChild.resize == 'function') c.firstElementChild.resize();
-                })
-            })
-            divRows[cid].style.display = 'none';
-        }
-    }
-
-    layout.show = function(cid) {
-        var cid = cid || 0;
-        divCols[cid].style.display = 'inline-block';
-
-        if(divCols.length) {
-            divCols.forEach(function(col, ci){
-                var newWidth = setting.colWidths[ci] - padding*2;
-
-                if(ci != cid) {
-                    col.style.width =  newWidth + 'px';
-                    cells[ci].forEach(function(c){
-                        c.style.width = newWidth + 'px';
-                        if(typeof c.firstElementChild.resize == 'function') c.firstElementChild.resize();
-                    })
-                }
-            })
-
-        }
-    }
-
-    layout.get = layout.grid = layout.cell;
+    layout.get = layout.cell;
     container.appendChild(layout);
     // container.onresize = function() {
     //     var newLayout = createLayout(container.clientWidth, container.clientHeight);

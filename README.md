@@ -1,2 +1,2 @@
-# Data Analytics and Visualization Interface
+# User Interface Library for Dashboard Applications
 ### UI library for developing visual analytics applications.

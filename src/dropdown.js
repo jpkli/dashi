@@ -1,13 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['dropdown', 'icon', 'menu']);
-
-if(typeof define == 'function') {
-    define(function(ui){
-        return Dropdown;
-    });
-}
-
-function Dropdown(arg) {
+export default function Dropdown(arg) {
     var dropdown = document.createElement('div'),
         wrapper = document.createElement('div');
         options = arg || {},

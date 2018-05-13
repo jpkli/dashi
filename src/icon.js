@@ -1,14 +1,4 @@
-if(typeof loadUIComponents == 'function')
-    loadUIComponents(['icon']);
-
-if(typeof define == 'function') {
-    define(['./ui'], function(ui){
-        ui(['icon']);
-        return Icon;
-    });
-}
-
-function Icon(arg) {
+export default function Icon(arg) {
     var icon = document.createElement('i'),
         options = arg || {},
         callback = options.onclick ||false,
