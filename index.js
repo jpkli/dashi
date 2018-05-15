@@ -1,20 +1,16 @@
-import './semantic/dist/components/reset.css';
-import './semantic/dist/components/site.css';
-import './semantic/dist/components/form.css';
-import './semantic/dist/components/header.css';
-import './semantic/dist/components/segment.css';
-import './semantic/dist/components/button.css';
-import './semantic/dist/components/dropdown.css';
-import './semantic/dist/components/icon.css';
-import './semantic/dist/components/menu.css';
-import './semantic/dist/components/transition';
-import './semantic/dist/components/checkbox.css';
-import './semantic/dist/components/progress.css';
-import './semantic/dist/components/table.css';
-import './semantic/dist/components/list.css';
-import './semantic/dist/components/modal.css';
+var root = typeof self == 'object' && self.self === self && self ||
+           typeof global == 'object' && global.global === global && global ||
+           this;
 
-import './semantic/dist/semantic.js';
+import 'semantic-ui-css/semantic.css';
+
+import $ from 'jquery';
+import 'semantic-ui-site';
+import 'semantic-ui-form';
+
+import transition from 'semantic-ui-transition';
+$.fn.transition = transition;
+root.$ = $;
 
 import button      from './src/button';
 import buttonGroup from './src/button-group';
@@ -45,10 +41,5 @@ let dashi = {
 };
 
 export default dashi;
-
-var root = typeof self == 'object' && self.self === self && self ||
-           typeof global == 'object' && global.global === global && global ||
-           this;
-
 
 root.dashi = dashi;

@@ -1,3 +1,7 @@
+import semanticProgress from 'semantic-ui-progress';
+import $ from 'jquery';     
+$.fn.progress = semanticProgress;
+
 export default function Progress(arg) {
     var div = document.createElement('div'),
         bar = document.createElement('div'),
@@ -24,7 +28,7 @@ export default function Progress(arg) {
     div.appendChild(label);
     if(container) container.appendChild(div);
 
-    var jquery = window.jQuery || $;
+    var jquery = window.jQuery || window.$;
 
     Object.defineProperty(div, 'percent', {
         set: function(f) {

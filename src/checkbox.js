@@ -1,3 +1,7 @@
+import $ from 'jquery';
+import semanticCheckbox from 'semantic-ui-checkbox';
+$.fn.checkbox = semanticCheckbox;
+
 export default function Checkbox(arg) {
     var checkbox = document.createElement('div'),
         options = arg || {},
@@ -24,9 +28,9 @@ export default function Checkbox(arg) {
 
     if(container) container.appendChild(checkbox);
 
-    var jquery = window.jQuery || jQuery || $;
-    if(typeof jquery !== 'undefined') {
-        jquery('.ui.checkbox').checkbox();
+    var jquery = window.jQuery || window.$;
+    if(typeof jquery == 'function') {
+        jquery(checkbox).checkbox();
     }
 
     Object.defineProperty(checkbox, 'onchange', {
