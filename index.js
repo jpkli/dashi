@@ -41,5 +41,18 @@ let dashi = {
 };
 
 export default dashi;
+export {button as Button} from './src/button';
+export {buttonGroup as ButtonGroup} from './src/button';
+export {checkbox as Checkbox} from './src/button';
+export {dropdown as Dropdown} from './src/button';
+export {fileInput as FileInput} from './src/button';
+export {icon as Icon} from './src/button';
+export {list as List} from './src/button';
+export {layout as Layout} from './src/button';
+export {panel as Panel} from './src/button';
+export {progressBar as ProgressBar} from './src/button';
+export {table as Table} from './src/button';
+export {radios as Radios} from './src/button';
+
 
 root.dashi = dashi;

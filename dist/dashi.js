@@ -60,11 +60,104 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["d"] = Button;
+function Button(arg) {
+    var button = document.createElement('div'),
+        options = arg || {},
+        container = options.container || document.body,
+        callback = options.onclick || function() {},
+        text = options.text || options.label || null,
+        icon = options.icon || false,
+        title = options.title || false,
+        type = options.type,
+        fontSize = options.fontSize || options.size || null,
+        background = options.background || null,
+        fileInput = options.fileInput || false,
+        value = options.value || null,
+        types = options.types || [];
+
+    if(type) types.push(type);
+    types.push('ui button');
+    button.className = types.join(' ');
+    button.onclick = callback;
+    button.style.textAlign = 'center';
+    button.style.verticalAlign = 'top';
+
+    if(icon) {
+        var i = document.createElement('i');
+        i.className = icon + ' icon';
+        i.style.marginRight = "10px";
+        button.className += ' icon';
+        button.appendChild(i);
+    }
+
+    if(value !== null) {
+        button.setAttribute('value', value);
+    }
+
+    if(fileInput) {
+        var input = document.createElement('input'),
+            inputName = fileInput.name || 'files[]';
+
+        input.setAttribute('type', 'file');
+        input.setAttribute('multiple', '');
+        if(fileInput.hasOwnProperty('id')){
+            input.setAttribute('id', fileInput.id);
+        }
+        input.style.display = 'none';
+        if(typeof fileInput.onchange === 'function') {
+            input.addEventListener('change', function(evt) {
+                // fileInput.onchange(evt.target.files);
+                fileInput.onchange(evt);
+                return false;
+            }, false);
+        }
+
+        button.appendChild(input);
+        button.onclick = function(evt) {
+            input.click();
+            return false;
+        }
+
+        button.fileInput = input;
+    }
+
+    if(text !== null) button.innerHTML += text;
+    if(fontSize !== null) button.style.fontSize = fontSize;
+    if(title) button.title = title;
+    if(container) container.appendChild(button);
+
+    button.showLoading = function() {
+        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
+            button.className += ' loading';
+    }
+
+    button.hideLoading = function() {
+        button.className = button.className.replace(/\bloading\b/, '');
+    }
+
+    button.toggleLoading = function() {
+        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
+            button.className += ' loading';
+        else
+            button.hideLoading();
+    }
+
+
+    return button;
+}
+
+
+/***/ }),
+/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -10435,7 +10528,7 @@ return jQuery;
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -10463,22 +10556,22 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_css_semantic_css__ = __webpack_require__(4);
+/* WEBPACK VAR INJECTION */(function(global) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_css_semantic_css__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_css_semantic_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_semantic_ui_css_semantic_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_semantic_ui_site__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_semantic_ui_site__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_semantic_ui_site___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_semantic_ui_site__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_semantic_ui_form__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_semantic_ui_form__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_semantic_ui_form___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_semantic_ui_form__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_semantic_ui_transition__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_semantic_ui_transition__ = __webpack_require__(8);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_semantic_ui_transition___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_semantic_ui_transition__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_button__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_button__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__src_button_group__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__src_checkbox__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__src_dropdown__ = __webpack_require__(12);
@@ -10490,6 +10583,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__src_progress__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__src_radios__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__src_table__ = __webpack_require__(21);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Button", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["button"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ButtonGroup", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["buttonGroup"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Checkbox", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["checkbox"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Dropdown", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["dropdown"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "FileInput", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["fileInput"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Icon", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["icon"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "List", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["list"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Layout", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["layout"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Panel", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["panel"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "ProgressBar", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["progressBar"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Table", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["table"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Radios", function() { return __WEBPACK_IMPORTED_MODULE_5__src_button__["radios"]; });
 var root = typeof self == 'object' && self.self === self && self ||
            typeof global == 'object' && global.global === global && global ||
            this;
@@ -10518,7 +10623,7 @@ root.$ = __WEBPACK_IMPORTED_MODULE_1_jquery___default.a;
 
 
 let dashi = {
-    button: __WEBPACK_IMPORTED_MODULE_5__src_button__["a" /* default */],
+    button: __WEBPACK_IMPORTED_MODULE_5__src_button__["d" /* default */],
     buttonGroup: __WEBPACK_IMPORTED_MODULE_6__src_button_group__["a" /* default */],
     checkbox: __WEBPACK_IMPORTED_MODULE_7__src_checkbox__["a" /* default */],
     dropdown: __WEBPACK_IMPORTED_MODULE_8__src_dropdown__["a" /* default */],  
@@ -10534,11 +10639,24 @@ let dashi = {
 
 /* harmony default export */ __webpack_exports__["default"] = (dashi);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 root.dashi = dashi;
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(4)))
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports) {
 
 var g;
@@ -10565,13 +10683,13 @@ module.exports = g;
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 5 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -11061,12 +11179,12 @@ $.extend($.expr[ ":" ], {
 });
 
 
-})( __webpack_require__(0), window, document );
+})( __webpack_require__(1), window, document );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -12775,12 +12893,12 @@ _module.exports.settings = {
 
 };
 
-})( __webpack_require__(0), window, document );
+})( __webpack_require__(1), window, document );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {/*!
@@ -13878,102 +13996,9 @@ _module.exports.settings = {
 };
 
 
-})( __webpack_require__(0), window, document );
+})( __webpack_require__(1), window, document );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = Button;
-function Button(arg) {
-    var button = document.createElement('div'),
-        options = arg || {},
-        container = options.container || document.body,
-        callback = options.onclick || function() {},
-        text = options.text || options.label || null,
-        icon = options.icon || false,
-        title = options.title || false,
-        type = options.type,
-        fontSize = options.fontSize || options.size || null,
-        background = options.background || null,
-        fileInput = options.fileInput || false,
-        value = options.value || null,
-        types = options.types || [];
-
-    if(type) types.push(type);
-    types.push('ui button');
-    button.className = types.join(' ');
-    button.onclick = callback;
-    button.style.textAlign = 'center';
-    button.style.verticalAlign = 'top';
-
-    if(icon) {
-        var i = document.createElement('i');
-        i.className = icon + ' icon';
-        i.style.marginRight = "10px";
-        button.className += ' icon';
-        button.appendChild(i);
-    }
-
-    if(value !== null) {
-        button.setAttribute('value', value);
-    }
-
-    if(fileInput) {
-        var input = document.createElement('input'),
-            inputName = fileInput.name || 'files[]';
-
-        input.setAttribute('type', 'file');
-        input.setAttribute('multiple', '');
-        if(fileInput.hasOwnProperty('id')){
-            input.setAttribute('id', fileInput.id);
-        }
-        input.style.display = 'none';
-        if(typeof fileInput.onchange === 'function') {
-            input.addEventListener('change', function(evt) {
-                // fileInput.onchange(evt.target.files);
-                fileInput.onchange(evt);
-                return false;
-            }, false);
-        }
-
-        button.appendChild(input);
-        button.onclick = function(evt) {
-            input.click();
-            return false;
-        }
-
-        button.fileInput = input;
-    }
-
-    if(text !== null) button.innerHTML += text;
-    if(fontSize !== null) button.style.fontSize = fontSize;
-    if(title) button.title = title;
-    if(container) container.appendChild(button);
-
-    button.showLoading = function() {
-        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
-            button.className += ' loading';
-    }
-
-    button.hideLoading = function() {
-        button.className = button.className.replace(/\bloading\b/, '');
-    }
-
-    button.toggleLoading = function() {
-        if((' ' + button.className + ' ').indexOf(' loading ') === -1)
-            button.className += ' loading';
-        else
-            button.hideLoading();
-    }
-
-
-    return button;
-}
-
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
 /* 9 */
@@ -14048,7 +14073,7 @@ function ButtonGroup(arg) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = Checkbox;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_jquery__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_semantic_ui_checkbox__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_semantic_ui_checkbox___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_semantic_ui_checkbox__);
@@ -14930,9 +14955,9 @@ _module.exports.settings = {
 
 };
 
-})( __webpack_require__(0), window, document );
+})( __webpack_require__(1), window, document );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
 /* 12 */
@@ -15591,7 +15616,7 @@ function Panel(arg) {
 /* harmony export (immutable) */ __webpack_exports__["a"] = Progress;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_progress__ = __webpack_require__(19);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_semantic_ui_progress___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_semantic_ui_progress__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_jquery___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_jquery__);
 
      
@@ -16592,9 +16617,9 @@ _module.exports.settings = {
 };
 
 
-})( __webpack_require__(0), window, document );
+})( __webpack_require__(1), window, document );
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(1)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)(module)))
 
 /***/ }),
 /* 20 */
