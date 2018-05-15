@@ -1,5 +1,3 @@
-
-
 import './semantic/dist/components/reset.css';
 import './semantic/dist/components/site.css';
 import './semantic/dist/components/form.css';
@@ -17,8 +15,6 @@ import './semantic/dist/components/list.css';
 import './semantic/dist/components/modal.css';
 
 import './semantic/dist/semantic.js';
-
-
 
 import button      from './src/button';
 import buttonGroup from './src/button-group';
