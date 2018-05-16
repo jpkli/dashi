@@ -43,7 +43,7 @@ var bundleSemantic = {
 
 var bundleSemanticJquery = {
   entry: {
-      "dashi.bundle.semantic-query.min": "./build/bundle.semantic-jquery.js"
+      "dashi.bundle.semantic-jquery.min": "./build/bundle.semantic-jquery.js"
   },
   devtool: "source-map",
   target: 'web',
