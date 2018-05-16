@@ -1,7 +1,3 @@
-import $ from 'jquery';
-import semanticCheckbox from 'semantic-ui-checkbox';
-$.fn.checkbox = semanticCheckbox;
-
 export default function Checkbox(arg) {
     var checkbox = document.createElement('div'),
         options = arg || {},

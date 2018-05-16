@@ -1,7 +1,3 @@
-import semanticProgress from 'semantic-ui-progress';
-import $ from 'jquery';     
-$.fn.progress = semanticProgress;
-
 export default function Progress(arg) {
     var div = document.createElement('div'),
         bar = document.createElement('div'),
