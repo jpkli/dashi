@@ -1,6 +1,6 @@
 {
   "name": "dashi",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "User Interface Library for Dashboard Applications",
   "main": "index.js",
   "scripts": {
@@ -27,9 +27,9 @@
   },
   "dependencies": {
     "jquery": "^3.3.1",
+    "semantic-ui-css": "^2.3.1",
     "semantic-ui-button": "^2.3.1",
     "semantic-ui-checkbox": "^2.3.1",
-    "semantic-ui-css": "^2.3.1",
     "semantic-ui-dropdown": "^2.3.1",
     "semantic-ui-form": "^2.3.1",
     "semantic-ui-header": "^2.3.1",

@@ -32,16 +32,16 @@ let dashi = {
 
 root.dashi = dashi;
 
-export default dashi;
-export {button as Button} from './src/button';
-export {buttonGroup as ButtonGroup} from './src/button-group';
-export {checkbox as Checkbox} from './src/checkbox';
-export {dropdown as Dropdown} from './src/dropdown';
-export {fileInput as FileInput} from './src/fileinput';
-export {icon as Icon} from './src/icon';
-export {list as List} from './src/list';
-export {layout as Layout} from './src/layout';
-export {panel as Panel} from './src/panel';
-export {progressBar as ProgressBar} from './src/progress';
-export {table as Table} from './src/table';
-export {radios as Radios} from './src/radios';
+// export default dashi;
+export {default as Button} from './src/button';
+export {default as ButtonGroup} from './src/button-group';
+export {default as Checkbox} from './src/checkbox';
+export {default as Dropdown} from './src/dropdown';
+export {default as FileInput} from './src/fileinput';
+export {default as Icon} from './src/icon';
+export {default as List} from './src/list';
+export {default as Layout} from './src/layout';
+export {default as Panel} from './src/panel';
+export {default as ProgressBar} from './src/progress';
+export {default as Table} from './src/table';
+export {default as Radios} from './src/radios';

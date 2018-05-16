@@ -1,4 +1,4 @@
-function DashBoard() {
+(function DashBoard() {
     var layout = new dashi.layout({
         // default: container = document.body or specificy the container as below
         // container: "testdiv",
@@ -144,6 +144,4 @@ function DashBoard() {
     });
     panels.detail.append(progressBar);
 
-};
-
-DashBoard();
+}())
